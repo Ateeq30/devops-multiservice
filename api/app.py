@@ -8,7 +8,7 @@ r = redis.Redis(host='redis', port=6379)
 
 @app.route('/')
 def home():
-    return "API is running!"
+    return "API iss running!"
 
 @app.route('/process', methods=['POST'])
 def process():
