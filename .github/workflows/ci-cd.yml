@@ -20,13 +20,17 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build API image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest ./api
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/api:latest \
+                 -t ${{ secrets.DOCKER_USERNAME }}/api:${{ github.sha }} ./api
 
       - name: Build Worker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/worker:latest ./worker
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/worker:latest \
+                 -t ${{ secrets.DOCKER_USERNAME }}/worker:${{ github.sha }} ./worker
 
       - name: Push API image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+             docker push ${{ secrets.DOCKER_USERNAME }}/api:${{ github.sha }}
 
       - name: Push Worker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/worker:latest
+             docker push ${{ secrets.DOCKER_USERNAME }}/worker:${{ github.sha }}
